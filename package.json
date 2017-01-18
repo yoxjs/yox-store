@@ -1,0 +1,30 @@
+{
+  "name": "yox-store",
+  "version": "0.0.1",
+  "description": "State Container for Yox.js",
+  "main": "src/index.js",
+  "scripts": {
+    "source": "rollup -c",
+    "release": "NODE_ENV=release rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoxjs/yox-store.git"
+  },
+  "keywords": [
+    "state",
+    "container",
+    "yox"
+  ],
+  "author": "musicode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yoxjs/yox-store/issues"
+  },
+  "homepage": "https://github.com/yoxjs/yox-store#readme",
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-uglify": "^1.0.1"
+  }
+}

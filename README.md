@@ -1,2 +1,3 @@
 # yox-store
-State Manager
+
+状态管理容器
