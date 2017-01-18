@@ -28,7 +28,7 @@ var createClass = function () {
   };
 }();
 
-var Yox = typeof require === 'function' ? require('yox') : window.Yox;
+var Yox = void 0;
 
 var Store = function () {
   function Store(shares) {
@@ -139,6 +139,16 @@ var Store = function () {
   }]);
   return Store;
 }();
+
+Store.version = '0.0.2';
+
+Store.install = function (Framework) {
+  Yox = Framework;
+};
+
+if (typeof Yox !== 'undefined' && Yox.use) {
+  Yox.use(Store);
+}
 
 return Store;
 

@@ -1,7 +1,5 @@
 
-const Yox = typeof require === 'function'
-  ? require('yox')
-  : window.Yox
+let Yox
 
 export default class Store {
 
@@ -174,4 +172,25 @@ export default class Store {
     this.$store.unwatch(key, listener)
   }
 
+}
+
+/**
+ * 版本
+ *
+ * @type {string}
+ */
+Store.version = '0.0.2'
+
+/**
+ * 安装插件
+ *
+ * @param {Yox} Framework
+ */
+Store.install = function (Framework) {
+  Yox = Framework
+}
+
+// 如果全局环境已有 Yox，自动安装
+if (typeof Yox !== 'undefined' && Yox.use) {
+  Yox.use(Store)
 }
