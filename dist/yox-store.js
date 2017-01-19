@@ -35,7 +35,6 @@ var Store = function () {
     classCallCheck(this, Store);
 
     this.$store = new Yox({});
-    this.$locked = {};
     if (shares) {
       this.register(shares);
     }
@@ -104,31 +103,12 @@ var Store = function () {
       var instance = this;
       var oldValue = instance.get(key);
       instance.set(key, value);
-      instance.lock(key);
 
-      return function () {
-        instance.unlock(key);
-        instance.set(key, oldValue);
+      return function (error) {
+        if (error) {
+          instance.set(key, oldValue);
+        }
       };
-    }
-  }, {
-    key: 'locked',
-    value: function locked(key) {
-      return this.$locked[key];
-    }
-  }, {
-    key: 'lock',
-    value: function lock(key) {
-      this.$locked[key] = true;
-    }
-  }, {
-    key: 'unlock',
-    value: function unlock(key) {
-      var $locked = this.$locked;
-
-      if ($locked[key]) {
-        delete $locked[key];
-      }
     }
   }, {
     key: 'watch',
@@ -144,7 +124,7 @@ var Store = function () {
   return Store;
 }();
 
-Store.version = '0.0.2';
+Store.version = '0.0.3';
 
 Store.install = function (Framework) {
   Yox = Framework;

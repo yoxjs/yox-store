@@ -5,7 +5,6 @@ export default class Store {
 
   constructor(shares) {
     this.$store = new Yox({ })
-    this.$locked = { }
     if (shares) {
       this.register(shares)
     }
@@ -112,51 +111,20 @@ export default class Store {
    *
    * @param {string} key
    * @param {string|number|boolean} value
-   * @param {Function} 返回失败时的处理函数
+   * @return {Function} 返回异步回调，传入是否失败
    */
   trying(key, value) {
 
     let instance = this
     let oldValue = instance.get(key)
     instance.set(key, value)
-    instance.lock(key)
 
-    return function () {
-      instance.unlock(key)
-      instance.set(key, oldValue)
+    return function (error) {
+      if (error) {
+        instance.set(key, oldValue)
+      }
     }
 
-  }
-
-  /**
-   * 数据是否加锁，如果已加锁，则在 UI 上应该禁止修改
-   *
-   * @param {string} key
-   * @return {?boolean}
-   */
-  locked(key) {
-    return this.$locked[ key ]
-  }
-
-  /**
-   * 数据加锁
-   *
-   * @param {string} key
-   */
-  lock(key) {
-    this.$locked[ key ] = true
-  }
-
-  /**
-   * 数据解锁
-   *
-   * @param {string} key
-   */
-  unlock(key) {
-    let { $locked } = this
-    if ($locked[ key ]) {
-      delete $locked[ key ]
-    }
   }
 
   /**
@@ -186,7 +154,7 @@ export default class Store {
  *
  * @type {string}
  */
-Store.version = '0.0.2'
+Store.version = '0.0.3'
 
 /**
  * 安装插件
