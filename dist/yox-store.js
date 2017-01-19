@@ -65,9 +65,13 @@ var Store = function () {
   }, {
     key: 'get',
     value: function get$$1(key, readFromStorage, callback) {
-      var value = this.$store.get(key);
+      var instance = this;
+      var value = instance.$store.get(key);
       if (readFromStorage) {
-        return value === undefined ? this.read(key, callback) : Yox.nextTick(function () {
+        return value === undefined ? instance.read(key, function (value) {
+          instance.set(key, value);
+          callback(value);
+        }) : Yox.nextTick(function () {
           callback(value);
         });
       }
@@ -95,7 +99,7 @@ var Store = function () {
     }
   }, {
     key: 'trying',
-    value: function trying(key, value, promise) {
+    value: function trying(key, value) {
 
       var instance = this;
       var oldValue = instance.get(key);

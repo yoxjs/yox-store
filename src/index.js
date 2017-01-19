@@ -56,10 +56,17 @@ export default class Store {
    * @param {?Function} callback 如果 readFromStorage 为 true，则必须传入回调函数
    */
   get(key, readFromStorage, callback) {
-    let value = this.$store.get(key)
+    let instance = this
+    let value = instance.$store.get(key)
     if (readFromStorage) {
       return value === undefined
-        ? this.read(key, callback)
+        ? instance.read(
+            key,
+            function (value) {
+              instance.set(key, value)
+              callback(value)
+            }
+          )
         : Yox.nextTick(
             function () {
               callback(value)
@@ -84,7 +91,7 @@ export default class Store {
   }
 
   /**
-   * 更新对象数据
+   * 更新对象类型的数据
    *
    * @param {string} key
    * @param {Object} value
@@ -107,7 +114,7 @@ export default class Store {
    * @param {string|number|boolean} value
    * @param {Function} 返回失败时的处理函数
    */
-  trying(key, value, promise) {
+  trying(key, value) {
 
     let instance = this
     let oldValue = instance.get(key)
