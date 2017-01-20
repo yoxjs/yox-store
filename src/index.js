@@ -113,11 +113,53 @@ export default class Store {
    * @param {string|number|boolean} value
    * @return {Function} 返回异步回调，传入是否失败
    */
-  trying(key, value) {
+  setting(key, value) {
 
     let instance = this
     let oldValue = instance.get(key)
     instance.set(key, value)
+
+    return function (error) {
+      if (error) {
+        instance.set(key, oldValue)
+      }
+    }
+
+  }
+
+  increasing(key, step, max) {
+
+    let instance = this
+    let oldValue = instance.get(key)
+    instance.$store.increase(key, step, max)
+
+    return function (error) {
+      if (error) {
+        instance.set(key, oldValue)
+      }
+    }
+
+  }
+
+  decreasing(key, step, min) {
+
+    let instance = this
+    let oldValue = instance.get(key)
+    instance.$store.decrease(key, step, min)
+
+    return function (error) {
+      if (error) {
+        instance.set(key, oldValue)
+      }
+    }
+
+  }
+
+  toggling(key) {
+
+    let instance = this
+    let oldValue = instance.get(key)
+    instance.$store.toggle(key)
 
     return function (error) {
       if (error) {
