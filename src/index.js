@@ -89,6 +89,14 @@ export default class Store {
     }
   }
 
+  increase(key, step, max) {
+    this.$store.increase(key, step, max)
+  }
+
+  decrease(key, step, min) {
+    this.$store.decrease(key, step, min)
+  }
+
   /**
    * 更新对象类型的数据
    *
@@ -131,7 +139,7 @@ export default class Store {
 
     let instance = this
     let oldValue = instance.get(key)
-    instance.$store.increase(key, step, max)
+    instance.increase(key, step, max)
 
     return function (error) {
       if (error) {
@@ -145,21 +153,7 @@ export default class Store {
 
     let instance = this
     let oldValue = instance.get(key)
-    instance.$store.decrease(key, step, min)
-
-    return function (error) {
-      if (error) {
-        instance.set(key, oldValue)
-      }
-    }
-
-  }
-
-  toggling(key) {
-
-    let instance = this
-    let oldValue = instance.get(key)
-    instance.$store.toggle(key)
+    instance.decrease(key, step, min)
 
     return function (error) {
       if (error) {
@@ -196,7 +190,7 @@ export default class Store {
  *
  * @type {string}
  */
-Store.version = '0.0.3'
+Store.version = '0.0.5'
 
 /**
  * 安装插件
