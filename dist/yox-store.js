@@ -85,24 +85,79 @@ var Store = function () {
       }
     }
   }, {
+    key: 'prepend',
+    value: function prepend(key, data) {
+      var list = this.$store.get(key);
+      if (!Yox.is.array(list)) {
+        list = [];
+      }
+      this.$store.set(key, Yox.array.merge(data, list));
+    }
+  }, {
+    key: 'append',
+    value: function append(key, data) {
+      var list = this.$store.get(key);
+      if (!Yox.is.array(list)) {
+        list = [];
+      }
+      this.$store.set(key, Yox.array.merge(list, data));
+    }
+  }, {
+    key: 'increase',
+    value: function increase(key, step, max) {
+      this.$store.increase(key, step, max);
+    }
+  }, {
+    key: 'decrease',
+    value: function decrease(key, step, min) {
+      this.$store.decrease(key, step, min);
+    }
+  }, {
     key: 'extend',
     value: function extend(key, value) {
       if (Yox.is.object(value)) {
         var oldValue = this.get(key);
         if (Yox.is.object(oldValue)) {
-          Yox.object.extend(oldValue, value);
-          value = oldValue;
+          value = Yox.object.extend({}, oldValue, value);
         }
         this.set(key, value);
       }
     }
   }, {
-    key: 'trying',
-    value: function trying(key, value) {
+    key: 'setting',
+    value: function setting(key, value) {
 
       var instance = this;
       var oldValue = instance.get(key);
       instance.set(key, value);
+
+      return function (error) {
+        if (error) {
+          instance.set(key, oldValue);
+        }
+      };
+    }
+  }, {
+    key: 'increasing',
+    value: function increasing(key, step, max) {
+
+      var instance = this;
+      var oldValue = instance.get(key);
+      instance.increase(key, step, max);
+
+      return function (error) {
+        if (error) {
+          instance.set(key, oldValue);
+        }
+      };
+    }
+  }, {
+    key: 'decreasing',
+    value: function decreasing(key, step, min) {
+
+      var instance = this;
+      var oldValue = instance.get(key);
+      instance.decrease(key, step, min);
 
       return function (error) {
         if (error) {
@@ -120,11 +175,16 @@ var Store = function () {
     value: function unwatch(key, listener) {
       this.$store.unwatch(key, listener);
     }
+  }, {
+    key: 'nextTick',
+    value: function nextTick(fn) {
+      this.$store.nextTick(fn);
+    }
   }]);
   return Store;
 }();
 
-Store.version = '0.0.3';
+Store.version = '0.1.0';
 
 Store.install = function (Framework) {
   Yox = Framework;

@@ -4,7 +4,7 @@ import uglify from 'rollup-plugin-uglify'
 var minify = process.env.NODE_ENV === 'release'
 
 export default {
-  entry: 'src/index.js',
+  entry: 'index.js',
   format: 'umd',
   moduleName: 'YoxStore',
   plugins: [

@@ -89,6 +89,28 @@ export default class Store {
     }
   }
 
+  prepend(key, data) {
+    let list = this.$store.get(key)
+    if (!Yox.is.array(list)) {
+      list = [ ]
+    }
+    this.$store.set(
+      key,
+      Yox.array.merge(data, list)
+    )
+  }
+
+  append(key, data) {
+    let list = this.$store.get(key)
+    if (!Yox.is.array(list)) {
+      list = [ ]
+    }
+    this.$store.set(
+      key,
+      Yox.array.merge(list, data)
+    )
+  }
+
   increase(key, step, max) {
     this.$store.increase(key, step, max)
   }
@@ -107,8 +129,7 @@ export default class Store {
     if (Yox.is.object(value)) {
       let oldValue = this.get(key)
       if (Yox.is.object(oldValue)) {
-        Yox.object.extend(oldValue, value)
-        value = oldValue
+        value = Yox.object.extend({}, oldValue, value)
       }
       this.set(key, value)
     }
@@ -183,6 +204,9 @@ export default class Store {
     this.$store.unwatch(key, listener)
   }
 
+  nextTick(fn) {
+    this.$store.nextTick(fn)
+  }
 }
 
 /**
@@ -190,7 +214,7 @@ export default class Store {
  *
  * @type {string}
  */
-Store.version = '0.0.5'
+Store.version = '0.1.0'
 
 /**
  * 安装插件
