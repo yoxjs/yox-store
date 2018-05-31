@@ -90,25 +90,11 @@ export default class Store {
   }
 
   prepend(key, data) {
-    let list = this.$store.get(key)
-    if (!Yox.is.array(list)) {
-      list = [ ]
-    }
-    this.$store.set(
-      key,
-      Yox.array.merge(data, list)
-    )
+    this.$store.prepend(key, data)
   }
 
   append(key, data) {
-    let list = this.$store.get(key)
-    if (!Yox.is.array(list)) {
-      list = [ ]
-    }
-    this.$store.set(
-      key,
-      Yox.array.merge(list, data)
-    )
+    this.$store.append(key, data)
   }
 
   increase(key, step, max) {
@@ -189,9 +175,10 @@ export default class Store {
    *
    * @param {string} key
    * @param {Function} listener
+   * @param {boolean} sync
    */
-  watch(key, listener) {
-    this.$store.watch(key, listener)
+  watch(key, listener, sync) {
+    this.$store.watch(key, listener, sync)
   }
 
   /**
@@ -214,7 +201,7 @@ export default class Store {
  *
  * @type {string}
  */
-Store.version = '0.1.0'
+Store.version = '0.1.1'
 
 /**
  * 安装插件
