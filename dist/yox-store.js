@@ -87,20 +87,12 @@ var Store = function () {
   }, {
     key: 'prepend',
     value: function prepend(key, data) {
-      var list = this.$store.get(key);
-      if (!Yox.is.array(list)) {
-        list = [];
-      }
-      this.$store.set(key, Yox.array.merge(data, list));
+      this.$store.prepend(key, data);
     }
   }, {
     key: 'append',
     value: function append(key, data) {
-      var list = this.$store.get(key);
-      if (!Yox.is.array(list)) {
-        list = [];
-      }
-      this.$store.set(key, Yox.array.merge(list, data));
+      this.$store.append(key, data);
     }
   }, {
     key: 'increase',
@@ -167,8 +159,8 @@ var Store = function () {
     }
   }, {
     key: 'watch',
-    value: function watch(key, listener) {
-      this.$store.watch(key, listener);
+    value: function watch(key, listener, sync) {
+      this.$store.watch(key, listener, sync);
     }
   }, {
     key: 'unwatch',
@@ -184,7 +176,7 @@ var Store = function () {
   return Store;
 }();
 
-Store.version = '0.1.0';
+Store.version = '0.1.2';
 
 Store.install = function (Framework) {
   Yox = Framework;

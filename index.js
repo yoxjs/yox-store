@@ -201,7 +201,7 @@ export default class Store {
  *
  * @type {string}
  */
-Store.version = '0.1.1'
+Store.version = '0.1.2'
 
 /**
  * 安装插件
