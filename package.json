@@ -1,6 +1,6 @@
 {
   "name": "yox-store",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "State Container for Yox.js",
   "main": "dist/yox-store.js",
   "scripts": {

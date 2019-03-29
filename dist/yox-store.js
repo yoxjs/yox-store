@@ -95,6 +95,16 @@ var Store = function () {
       this.$store.append(key, data);
     }
   }, {
+    key: 'removeAt',
+    value: function removeAt(keypath, index) {
+      return this.$store.removeAt(keypath, index);
+    }
+  }, {
+    key: 'remove',
+    value: function remove(keypath, item) {
+      return this.$store.remove(keypath, item);
+    }
+  }, {
     key: 'increase',
     value: function increase(key, step, max) {
       this.$store.increase(key, step, max);
