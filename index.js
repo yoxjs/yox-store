@@ -116,7 +116,7 @@ export default class Store {
    * @return {?boolean} 是否移除成功
    */
   remove(keypath, item) {
-    return this.$store.removeAt(keypath, item)
+    return this.$store.remove(keypath, item)
   }
 
   increase(key, step, max) {
