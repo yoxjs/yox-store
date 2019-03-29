@@ -97,6 +97,28 @@ export default class Store {
     this.$store.append(key, data)
   }
 
+  /**
+   * 通过索引移除数组中的元素
+   *
+   * @param {string} keypath
+   * @param {number} index
+   * @return {?boolean} 是否移除成功
+   */
+  removeAt(keypath, index) {
+    return this.$store.removeAt(keypath, index)
+  }
+
+  /**
+   * 直接移除数组中的元素
+   *
+   * @param {string} keypath
+   * @param {*} item
+   * @return {?boolean} 是否移除成功
+   */
+  remove(keypath, item) {
+    return this.$store.removeAt(keypath, item)
+  }
+
   increase(key, step, max) {
     this.$store.increase(key, step, max)
   }
