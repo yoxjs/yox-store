@@ -1,21 +1,22 @@
 {
   "name": "yox-store",
-  "version": "0.1.5",
-  "description": "State Container for Yox.js",
-  "main": "dist/yox-store.js",
+  "version": "0.10.0",
+  "description": "data store for yox.js",
+  "main": "dist/yox-store.min.js",
+  "keywords": [
+    "lightweight",
+    "data",
+    "store",
+    "yox"
+  ],
   "scripts": {
-    "source": "rollup -c",
-    "release": "NODE_ENV=release rollup -c"
+    "dev": "node_modules/.bin/rollup -c ./build/config.dev.js",
+    "prod": "node_modules/.bin/rollup -c ./build/config.prod.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yoxjs/yox-store.git"
   },
-  "keywords": [
-    "state",
-    "container",
-    "yox"
-  ],
   "author": "musicode",
   "license": "MIT",
   "bugs": {
@@ -23,8 +24,14 @@
   },
   "homepage": "https://github.com/yoxjs/yox-store#readme",
   "devDependencies": {
-    "babel-preset-es2015-rollup": "^1.2.0",
-    "rollup-plugin-babel": "^2.6.1",
-    "rollup-plugin-uglify": "^1.0.1"
+    "rollup": "^1.10.1",
+    "rollup-plugin-buble": "^0.19.6",
+    "rollup-plugin-filesize": "^6.0.1",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tslib": "^1.9.3",
+    "typescript": "^3.4.4"
   }
 }
