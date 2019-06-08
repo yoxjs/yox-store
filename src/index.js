@@ -1,30 +1,10 @@
 
 let Yox
 
-export default class Store {
+export class Store {
 
-  constructor(shares) {
-    this.$store = new Yox({ })
-    if (shares) {
-      this.register(shares)
-    }
-  }
-
-  register(shares) {
-    let instance = this
-    Yox.array.each(
-      shares,
-      function (type) {
-        instance[ type ] = function () {
-          let args = arguments
-          let key = `${type}.${args[ 0 ]}`
-          if (args.length === 1 && Yox.is.string(args[ 0 ])) {
-            return instance.get(key, args[ 1 ])
-          }
-          instance.set(key, args[ 1 ], args[ 2 ])
-        }
-      }
-    )
+  constructor() {
+    this.$store = new Yox()
   }
 
   /**
@@ -137,7 +117,10 @@ export default class Store {
     if (Yox.is.object(value)) {
       let oldValue = this.get(key)
       if (Yox.is.object(oldValue)) {
-        value = Yox.object.extend({}, oldValue, value)
+        value = Yox.object.extend(
+          Yox.object.extend({}, oldValue),
+          value
+        )
       }
       this.set(key, value)
     }
@@ -196,45 +179,37 @@ export default class Store {
    * 数据监听
    *
    * @param {string} key
-   * @param {Function} listener
-   * @param {boolean} sync
+   * @param {Function} watcher
+   * @param {boolean} immediate
    */
-  watch(key, listener, sync) {
-    this.$store.watch(key, listener, sync)
+  watch(key, watcher, immediate) {
+    this.$store.watch(key, watcher, immediate)
   }
 
   /**
    * 取消数据监听
    *
    * @param {string} key
-   * @param {Function} listener
+   * @param {Function} watcher
    */
-  unwatch(key, listener) {
-    this.$store.unwatch(key, listener)
+  unwatch(key, watcher) {
+    this.$store.unwatch(key, watcher)
   }
 
   nextTick(fn) {
     this.$store.nextTick(fn)
   }
+
 }
 
 /**
  * 版本
- *
- * @type {string}
  */
-Store.version = '0.1.2'
+export const version = process.env.NODE_VERSION
 
 /**
  * 安装插件
- *
- * @param {Yox} Framework
  */
-Store.install = function (Framework) {
-  Yox = Framework
-}
-
-// 如果全局环境已有 Yox，自动安装
-if (typeof Yox !== 'undefined' && Yox.use) {
-  Yox.use(Store)
+export function install(Class) {
+  Yox = Class
 }
